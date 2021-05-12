@@ -1,0 +1,113 @@
+<%- include("template/cabecera", {titulo:"Mascotas"}) %>
+
+    <div class="container">
+
+      <h1><%= titulo %></h1>
+
+
+        <a href="/mascotas/crear" class="btn btn-primary btn-block my-4" >Crear nueva mascotas</a>
+            <% if(!estado){ %>
+              <p><%= mensaje %></p>
+
+            <%} else { %>
+              <div class="table-responsive">
+                <table id="tablaMascotas" class="table">
+                  <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Nombre</th>
+                      <th scope="col">Descripcion</th>
+                      <th scope="col">Accion</th>
+                    </tr>
+
+                  </thead>
+                  <!--
+                    <tbody>
+                        <% listaMascotas.forEach(mascota => { %>
+                          <tr>
+                            <th scope="row"><%= mascota._id %></th>
+                            <td><%= mascota.nombre %></td>
+
+                            <td>
+                              <a type="button" class="btn btn-warning btn-sm" href="mascotas/<%= mascota._id %>"">Editar</a>
+                              <button type="button" id="btnEliminar" data-id="<%= mascota._id %>" class="btn btn-danger btn-sm" >Eliminar</button>
+                            </td>
+                          </tr>
+                        <% }); %>
+                    </tbody>
+                  -->
+                </table>
+
+              </div>
+            <% } %>
+    </div>
+
+
+<%- include("template/footer"); %>
+
+<script>
+  /*
+    const btnEliminar = document.querySelector("#btnEliminar");
+    btnEliminar.addEventListener("click", async()=>{
+      const id = btnEliminar.dataset.id;
+      try{
+        const data = await fetch(`/mascotas/${id}`,{ method:'delete' });
+        const res = await data.json();
+        if(res.estado){
+          window.location.href = "/mascotas";
+        }else{
+          console.log(res);
+        }
+
+      }
+      catch (error){
+        console.log(error);
+      }
+    })
+  */
+</script>
+
+<script>
+
+  fetch('/mascotas/obtenerMascotas')
+  .then(res=>res.json())
+  .then(data=>{
+      $("#tablaMascotas").DataTable({
+        "language": { "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json" },
+        "data": data.listaMascotas,
+        "columns": [
+          {"data":"_id"},
+          {"data":"nombre"},
+          {"data":"descripcion"},
+          {"render": function ( data, type, full, meta) {
+              return "<a class='btn btn-warning bt-sm' href='mascotas/"+full._id+"'>Editar</a> "+
+                     "<button class='btn btn-danger bt-sm' onclick='eliminar(this)'>Eliminar</button>";
+          }
+        }]
+
+      })
+
+  })
+  .catch(error=>{
+    console.log(error);
+  })
+
+</script>
+
+<script>
+  function eliminar(button){
+    const id = button.dataset.id;
+     fetch(`/mascotas/${id}`,{ method:'delete' })
+     .then(res=>res.json())
+     .then(data=>{
+       if(data.estado){
+         window.location.href = "/mascotas";
+       }else{
+         console.log(data);
+       }
+     })
+    .catch (error =>{
+      console.log(error);
+    })
+  }
+</script>

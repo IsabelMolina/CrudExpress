@@ -81,7 +81,7 @@
           {"data":"descripcion"},
           {"render": function ( data, type, full, meta) {
               return "<a class='btn btn-warning bt-sm' href='mascotas/"+full._id+"'>Editar</a> "+
-                     "<button class='btn btn-danger bt-sm' onclick='eliminar(this)'>Eliminar</button>";
+                     "<button class='btn btn-danger bt-sm' data-id='"+full._id+"' onclick='eliminar(this)'>Eliminar</button>";
           }
         }]
 

@@ -1,34 +1,9 @@
-/*const {frutas, dinero} = require("./frutas");
-
-frutas.forEach((fruta) => {
-  console.count(fruta);
-});
-
-console.log("mi dinero actual: ", dinero);
-
-var cowsay = require("cowsay");
-console.log(
-  cowsay.say({
-    text: "I'm a moooodule",
-    e: "Oo",
-    T: "U",
-  })
-);*/
-
-/*const http = require("http");
-const server = http.createServer((req, res) =>{
-  res.end("Estoy respondiendo a tu solicitud");
-});
-
-const port = 3000;
-server.listen(port, ()=>{
-  console.log("Escuchando solicitudes");
-})*/
-
-const express = require("express");
-const bodyParser = require('body-parser');
+const express = require("express")
 const app = express();
 
+const bodyParser = require("body-parser");
+
+// Middleware
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
@@ -55,15 +30,6 @@ app.use(express.static(__dirname + "/public"));
 
 app.use('/', require('./router/web'));
 app.use('/mascotas', require('./router/mascotas'));
-
-/*app.get("/", (req, res) => {
-  res.render("index", {titulo: "mi titulo dinamico"});
-});*/
-
-/*app.get("/servicios", (req, res) => {
-  //res.send("Estas en la pagina de servicios");
-  res.render("servicios", {titulo: "Este es un titulo dinamico de servicios"})
-});*/
 
 app.use((req, res, next) => {
   // res.status(404).send("Sorry cant find that!");

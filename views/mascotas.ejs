@@ -4,7 +4,6 @@
 
       <h1><%= titulo %></h1>
 
-
         <a href="/mascotas/crear" class="btn btn-primary btn-block my-4" >Crear nueva mascotas</a>
             <% if(!estado){ %>
               <p><%= mensaje %></p>
@@ -21,21 +20,21 @@
                     </tr>
 
                   </thead>
-                  <!--
-                    <tbody>
-                        <% listaMascotas.forEach(mascota => { %>
-                          <tr>
-                            <th scope="row"><%= mascota._id %></th>
-                            <td><%= mascota.nombre %></td>
 
-                            <td>
-                              <a type="button" class="btn btn-warning btn-sm" href="mascotas/<%= mascota._id %>"">Editar</a>
-                              <button type="button" id="btnEliminar" data-id="<%= mascota._id %>" class="btn btn-danger btn-sm" >Eliminar</button>
-                            </td>
-                          </tr>
-                        <% }); %>
-                    </tbody>
-                  -->
+                  <tbody>
+                      <% listaMascotas.forEach(mascota => { %>
+                        <tr>
+                          <th scope="row"><%= mascota._id %></th>
+                          <td><%= mascota.nombre %></td>
+                          <td><%= mascota.descripcion %></td>
+                          <td>
+                            <a type="button" class="btn btn-warning btn-sm" href="mascotas/<%= mascota._id %>">Editar</a>
+                            <button class="btn btn-danger btn-sm" data-id="<%= mascota._id %>" onclick="eliminarMascota(this)" >Eliminar</button>
+                          </td>
+                        </tr>
+                      <% }); %>
+                  </tbody>
+
                 </table>
 
               </div>
@@ -46,68 +45,20 @@
 <%- include("template/footer"); %>
 
 <script>
-  /*
-    const btnEliminar = document.querySelector("#btnEliminar");
-    btnEliminar.addEventListener("click", async()=>{
-      const id = btnEliminar.dataset.id;
-      try{
-        const data = await fetch(`/mascotas/${id}`,{ method:'delete' });
-        const res = await data.json();
-        if(res.estado){
-          window.location.href = "/mascotas";
-        }else{
-          console.log(res);
-        }
-
+  async function eliminarMascota(btnEliminar){
+    const id = btnEliminar.dataset.id;
+    try{
+      const data = await fetch(`/mascotas/${id}`,{ method:'delete' });
+      const res = await data.json();
+      if(res.estado){
+        window.location.href = "/mascotas";
+      }else{
+        console.log(res);
       }
-      catch (error){
-        console.log(error);
-      }
-    })
-  */
-</script>
-
-<script>
-
-  fetch('/mascotas/obtenerMascotas')
-  .then(res=>res.json())
-  .then(data=>{
-      $("#tablaMascotas").DataTable({
-        "language": { "url": "https://cdn.datatables.net/plug-ins/1.10.24/i18n/Spanish.json" },
-        "data": data.listaMascotas,
-        "columns": [
-          {"data":"_id"},
-          {"data":"nombre"},
-          {"data":"descripcion"},
-          {"render": function ( data, type, full, meta) {
-              return "<a class='btn btn-warning bt-sm' href='mascotas/"+full._id+"'>Editar</a> "+
-                     "<button class='btn btn-danger bt-sm' data-id='"+full._id+"' onclick='eliminar(this)'>Eliminar</button>";
-          }
-        }]
-
-      })
-
-  })
-  .catch(error=>{
-    console.log(error);
-  })
-
-</script>
-
-<script>
-  function eliminar(button){
-    const id = button.dataset.id;
-     fetch(`/mascotas/${id}`,{ method:'delete' })
-     .then(res=>res.json())
-     .then(data=>{
-       if(data.estado){
-         window.location.href = "/mascotas";
-       }else{
-         console.log(data);
-       }
-     })
-    .catch (error =>{
+    }
+    catch (error){
       console.log(error);
-    })
+    }
   }
+
 </script>

@@ -9,10 +9,6 @@ router.get('/', async(req, res) => {
       const titulo = "Mascotas";
       if(arrayMascotasDB.length > 0){
         res.render("mascotas", {
-          // listaMascotas: [
-          //  {id: "43434", nombre: "rex", descripcion:"rex descripcion"},
-          //  {id: "75554", nombre: "chanchan", descripcion:"chanchan descripcion"},
-          // ],
           titulo,
           listaMascotas: arrayMascotasDB,
           estado: true
@@ -25,34 +21,10 @@ router.get('/', async(req, res) => {
           mensaje: "No se encuentran mascotas"
         })
       }
-
-
     } catch (error) {
-
       console.log(error)
     }
 
-})
-
-
-router.get('/obtenerMascotas', async (req, res)=>{
-  try {
-    const arrayMascotasDB= await Mascota.find();
-    if(arrayMascotasDB){
-      res.json({
-        listaMascotas: arrayMascotasDB,
-        estado: true
-      });
-    }
-    else{
-      res.json({
-        estado: false,
-        mensaje: "No se encuentran mascotas"
-      })
-    }
-  } catch (e) {
-    console.log(e);
-  }
 })
 
 router.get('/crear', (req, res)=>{

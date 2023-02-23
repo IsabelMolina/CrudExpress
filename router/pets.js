@@ -24,7 +24,7 @@ router.post('/', async (req, res)=>{
   const body =  req.body;
 
   if(!body.name || !body.description){
-    res.sendStatus(422);
+    res.render('422');
   }
 
   await Pet.create(body);
@@ -44,7 +44,7 @@ router.get('/:id', async(req, res) => {
     })
   } 
   catch (error) {
-    res.sendStatus(404)
+    res.render('404')
   }
 
 })
@@ -58,7 +58,7 @@ router.delete("/:id", async (req, res) => {
     res.sendStatus(204)
   } 
   catch (error) {
-    res.sendStatus(404)
+    res.sendStatus(404);
   }
 })
 

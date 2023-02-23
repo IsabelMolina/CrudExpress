@@ -1,0 +1,47 @@
+<%- include("../template/cabecera", {titulo:"Mascotas"}) %>
+
+<div class="container">
+    <h1>Mascotas</h1>
+    <a href="/pets/create" class="btn btn-primary btn-block my-4" >Crear nueva mascotas</a>
+    <div class="table-responsive">
+        <table id="tablePets" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Accion</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <% pets.forEach(pet => { %>
+                  <tr>
+                      <th scope="row"><%= pet._id %></th>
+                      <td><%= pet.nombre %></td>
+                      <td><%= pet.descripcion %></td>
+                      <td>
+                        <a type="button" class="btn btn-warning btn-sm" href="pets/<%= pet._id %>">Editar</a>
+                        <button class="btn btn-danger btn-sm" data-id="<%= pet._id %>" onclick="deletePet(this)" >Eliminar</button>
+                      </td>
+                  </tr>
+                <% }); %>
+            </tbody>
+        </table>     
+    </div>        
+</div>  
+
+
+<%- include("../template/footer"); %>
+
+<script>
+  
+  async function deletePet(btnDelete){
+    const id = btnDelete.dataset.id;   
+    const res = await fetch(`/pets/${id}`,{ method:'delete' });
+    if(res.status == 200){
+      window.location.href = "/pets";
+    }
+  }
+
+</script>

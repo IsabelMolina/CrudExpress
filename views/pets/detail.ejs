@@ -1,0 +1,43 @@
+<%- include("../template/cabecera", {titulo: "Crear nueva mascota"}) %>
+  <div class="container">
+    <h1>Detalle Mascota</h1>
+    <form id="frmEdit" data-id="<%= pet.id %>" >
+      <div class="form-group">
+        <label for="name">Nombre</label>
+        <input type="text" class="form-control" name="name" id="name" value="<%= mascota.nombre %>">
+      </div>
+      <div class="form-group">
+        <label for="description">Descripion</label>
+        <input type="text" class="form-control" name="description" id="description"  value="<%= mascota.descripcion %>">
+      </div>
+      <button type="submit" class="btn btn-warning" >Editar</button>
+    </form>
+  </div>
+<%- include("../template/footer"); %>
+
+<script>
+  
+  const frmEdit = document.querySelector("#frmEdit");
+
+  frmEdit.addEventListener("submit", async(e)=>{ 
+
+    e.preventDefault();
+    const name = frmEdit.elements['name'].value;
+    const description = frmEdit.elements['description'].value;
+    const id = frmEdit.dataset.id;
+  
+    const res = await fetch(`/pets/${id}`, {
+      method: "PUT",
+      headers: {
+       'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name:name, description:description})
+    });
+
+    if(res.status == 200){
+       window.location.href = '/pets';
+    }
+    
+  })
+
+</script>

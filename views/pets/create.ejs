@@ -1,0 +1,18 @@
+<%- include("../template/cabecera", {titulo: "Crear nueva mascota"}) %>
+    <div class="container">
+      <h1>Crear Mascota</h1>
+      
+      <form class="" action="/pets" method="post">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" class="form-control" name="name" id="name" placeholder="Ingresar nombre">
+        </div>
+        <div class="form-group">
+          <label for="description">Descripion</label>
+          <input type="text" class="form-control" name="description" id="description" placeholder="Ingresar descripcion">
+        </div>
+        <button type="submit" class="btn btn-primary" >Agregar</button>
+      </form>
+    </div>
+
+<%- include("../template/footer"); %>

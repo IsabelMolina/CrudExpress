@@ -1,4 +1,4 @@
-<%- include("../template/header", {title: "Crear nueva mascota"}) %>
+<%- include("../template/head", {title: "Crear nueva mascota"}) %>
   <div class="container">
     <h1>Detalle Mascota</h1>
     <form id="frmEdit" data-id="<%= pet.id %>" >
@@ -13,7 +13,7 @@
       <button type="submit" class="btn btn-warning" >Editar</button>
     </form>
   </div>
-<%- include("../template/footer"); %>
+<%- include("../template/foot"); %>
 
 <script>
   
@@ -36,6 +36,10 @@
 
     if(res.status == 200){
        window.location.href = '/pets';
+    }
+
+    if(res.status == 422){
+      window.location.href = `/pets/${id}`
     }
     
   })

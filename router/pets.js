@@ -24,9 +24,10 @@ router.post('/', async (req, res)=>{
   const body =  req.body;
 
   if(!body.name || !body.description){
-    res.render('422');
+    res.redirect("/pets/create");
+    return;
   }
-
+ 
   await Pet.create(body);
 
   res.redirect("/pets");
@@ -69,6 +70,7 @@ router.put("/:id", async(req, res)=>{
 
   if(!body.name || !body.description){
     res.sendStatus(422);
+    return;
   }
 
   try {
